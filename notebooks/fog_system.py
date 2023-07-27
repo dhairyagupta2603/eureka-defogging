@@ -40,7 +40,7 @@ def dehaze(image, fog_reduction=0.5):
     return recovered_scene
 
 
-capture = cv2.VideoCapture(os.path.join(data_path, 'foggy_dashcam2.mp4'))
+capture = cv2.VideoCapture(os.path.join(data_path, 'fogy_dashcam3.mp4'))
 FPS = capture.get(cv2.CAP_PROP_FPS)
 HEIGHT = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
 WIDTH = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -56,7 +56,7 @@ fog_reduction = 0.85  # Set the fog reduction level (0.0 to 1.0)
 for frame_id in range(COUNT):
     ret, frame = capture.read()
     if ret:
-        frame = cv2.resize(frame, (WIDTH//4, HEIGHT//4))
+        frame = cv2.resize(frame, (WIDTH, HEIGHT))
         dehazed_frame = dehaze(frame, fog_reduction=fog_reduction)
         results = model(dehazed_frame)
         annotated_frame = results[0].plot()
