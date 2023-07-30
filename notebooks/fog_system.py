@@ -46,10 +46,6 @@ HEIGHT = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
 WIDTH = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
 COUNT = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
 
-# fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-
-# out = cv2.VideoWriter(output_video_path, fourcc, fps, (frame_width, frame_height))
-
 fog_reduction = 0.85  # Set the fog reduction level (0.0 to 1.0)
 
 # Process each frame and write to the output video
@@ -60,7 +56,6 @@ for frame_id in range(COUNT):
         dehazed_frame = dehaze(frame, fog_reduction=fog_reduction)
         results = model(dehazed_frame)
         annotated_frame = results[0].plot()
-        # out.write(dehazed_frame)
         cv2.imshow('dashcam', annotated_frame)
     else:
         print("ERROR")
@@ -68,7 +63,6 @@ for frame_id in range(COUNT):
     if cv2.waitKey(10) & 0xFF == ord('q'):
         break
 
-# Release the video capture and writer objects
+# Release the video capture
 capture.release()
-# out.release()
 cv2.destroyAllWindows()
